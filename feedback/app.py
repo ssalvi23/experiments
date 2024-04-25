@@ -11,7 +11,7 @@ def submit():
     name = request.form['name']
     feedback = request.form['feedback']
 
-    return 'Feedback stored successfully'
+    return render_template('result.html',feedback=feedback)
 
 if __name__=='__main__':
     app.run(debug=True)
