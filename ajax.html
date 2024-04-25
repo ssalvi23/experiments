@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Validation</title>
+    <script>
+        function validateUser() {
+            var username = document.getElementById("username").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/validate", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        document.getElementById("validation-result").innerHTML = response.message;
+                    } else {
+                        console.error("Error:", xhr.statusText);
+                    }
+                }
+            };
+            var data = JSON.stringify({ username: username });
+            xhr.send(data);
+        }
+    </script>
+</head>
+<body>
+    <h2>User Validation</h2>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <button type="button" onclick="validateUser()">Submit</button>
+    </form>
+    <div id="validation-result">Validation result will appear here.</div>
+</body>
+</html>
